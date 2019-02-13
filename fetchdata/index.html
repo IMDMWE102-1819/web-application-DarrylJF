@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <!-- Bootstrap 4 CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!--The site must be responsive and demonstrate considerations towards accessibility and usability.
+        The HTML and CSS written should validate with very few errors or issues and testing must be 
+        demonstrated between different browsers.--> 
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+<body>
+ 
+
+        <div class="input-group my-4 col-6 mx-auto">
+            <form id="target" action="">
+                    <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search Artist..." id="searchInput">
+                    <span class="input-group-append">
+                        <button type="button" id="dropdownbtn" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split border border-left-0 border-right-0 rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <button class="btn btn-outline-primary rounded-right" type="submit" id="searchBtn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                            <div role="separator" class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </span>
+            </form>
+                
+            </div>
+            <div id="display">
+
+            </div>
+
+            <div class="container" id="data">
+                
+            </div>
+<script>
+
+$("#searchBtn").click(function() {
+var artist = $(this).closest("form").find("#searchInput").val();
+    alert(artist);
+    return False;
+});
+
+
+if (!('fetch' in window)) {
+    console.log("Fetch API not found, try including polyfill"); // To use fetch in unsupported browsers, there is a Fetch Polyfill available that recreates the functionality for non-supported browsers
+}
+function status(response, artist) { // Status function checks the response.status and returns the result of Promise.resolve() or Promise.reject() which returns a resolved or rejected promise
+    if (response.status >= 200 & response.status < 300) {
+        return Promise.resolve(response)
+    } else {
+        return Promise.reject(new Error(response.statusText))
+    } // this is the first method called in the chain, if it resolves, then json() method is called which returns a Promise from the response.json()
+} // After this we have an object of the parsed JSON. If Parsing fails the Promise is rejected and the catch statement executes.
+function json(response, artist) {
+    return response.json()
+}
+fetch("https://api.deezer.com/search/artist?q=" + artist +'&limit=1') 
+    .then(status)
+    .then(json)
+    .then(function(data) {
+        console.log('Request succeeded with JSON response', data.data[0].picture_big);
+    }).catch(function(error) {
+        console.log('Request failed', error);
+    });
+
+
+function displayImage(response) {
+    console.log("testing")
+    response.data('#data');
+    response.json().then(function(data) {
+        $.each(data.data, function(index, value) {
+            $('#data').append('<li><img src=" '+ value.picture_big +'"</img></li>');
+        });
+    });
+}
+displayImage()
+// this is the first method called in the chain, if it resolves, then json() method is called which returns a Prmise from the response.json()
+/*function displayData() {
+    myJson.data('#data');
+    response.json().then(function(data) {
+              console.log(data.data, data.data[0].album, data.data[0].artist, data.data[0].title);
+
+              $.each(data.data, function(index, value) {
+                $("#data").append('<li><img src="' + value.album.cover + '"/></li>');
+                $("#data").append('<li>' + value.album.title + '</li>');
+              });
+            });
+          }*/
+        
+</script>
+
+
+
+
+
+
+    <!--JQuery, Popper.js, Bootstrap JS-->
+    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
