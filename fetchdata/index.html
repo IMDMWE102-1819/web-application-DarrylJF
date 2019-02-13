@@ -8,64 +8,59 @@
     
     <!-- Bootstrap 4 CSS-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Local Linked Stylesheet -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" rel="stylesheet">
     <!--The site must be responsive and demonstrate considerations towards accessibility and usability.
         The HTML and CSS written should validate with very few errors or issues and testing must be 
         demonstrated between different browsers.--> 
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 </head>
 <body>
- 
+        <!-- Container for form input starts here -->
+        <div class="container-fluid" id="formContainer">
+            <div class="row">
+                <div class="col-12">
+                    <form class="form-inline md-form mr-auto mb-4" id="target">
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="searchInput">
+                        <button class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Container for form input ends here -->
 
-        <div class="input-group my-4 col-6 mx-auto">
-            <form id="target" action="">
-                    <input class="form-control py-2 border-right-0 border" type="search" placeholder="Search Artist..." id="searchInput">
-                    <span class="input-group-append">
-                        <button type="button" id="dropdownbtn" class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split border border-left-0 border-right-0 rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <button class="btn btn-outline-primary rounded-right" type="submit" id="searchBtn">
-                            <i class="fas fa-search"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div role="separator" class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
-                        </div>
-                    </span>
-            </form>
+        <!-- Container for artist image starts here -->
+        <div class="container" id="data">
                 
-            </div>
-            <div id="display">
+        </div>
+        <!-- Container for artist image ends here -->
 
-            </div>
-
-            <div class="container" id="data">
-                
-            </div>
+<!-- Main script starts here -->
 <script>
-
 $("#searchBtn").click(function() {
 var artist = $(this).closest("form").find("#searchInput").val();
     alert(artist);
     return False;
 });
 
-
 if (!('fetch' in window)) {
     console.log("Fetch API not found, try including polyfill"); // To use fetch in unsupported browsers, there is a Fetch Polyfill available that recreates the functionality for non-supported browsers
 }
-function status(response, artist) { // Status function checks the response.status and returns the result of Promise.resolve() or Promise.reject() which returns a resolved or rejected promise
+function status(response) { // Status function checks the response.status and returns the result of Promise.resolve() or Promise.reject() which returns a resolved or rejected promise
     if (response.status >= 200 & response.status < 300) {
         return Promise.resolve(response)
     } else {
         return Promise.reject(new Error(response.statusText))
     } // this is the first method called in the chain, if it resolves, then json() method is called which returns a Promise from the response.json()
 } // After this we have an object of the parsed JSON. If Parsing fails the Promise is rejected and the catch statement executes.
-function json(response, artist) {
+function json(response) {
     return response.json()
 }
 fetch("https://api.deezer.com/search/artist?q=" + artist +'&limit=1') 
@@ -102,16 +97,23 @@ displayImage()
           }*/
         
 </script>
+<!-- Main script ends here -->
 
 
 
 
 
-
-    <!--JQuery, Popper.js, Bootstrap JS-->
-    
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<!--JQuery, Popper.js, Bootstrap JS-->
+<!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/js/mdb.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
